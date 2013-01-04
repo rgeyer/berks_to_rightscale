@@ -1,0 +1,7 @@
+*.ipr
+*.iws
+*.iml
+pkg/*
+.DS_Store
+.yardoc
+doc/*
