@@ -1,0 +1,95 @@
+# berks_to_rightscale
+
+This is primarily a commandline tool for injesting a Berksfile and uploading the resulting set of cookbooks to a tar.gz file in any storage provider supported by [fog](https://rubygems.org/gems/fog)
+
+## Installation
+
+  gem install berks_to_rightscale
+
+## Usage
+
+This requires a ~/.fog configuration file with the proper credentials for any storage provider(s) you wish to use.  To get an example of the ~/.fog config file do the following after installing berks_to_rightscale (shown above)
+
+  fog                                                                                                                                   [1.9.3-p194]
+  Missing Credentials
+
+  To run as 'default', add the following to your resource config file: /Users/ryangeyer/.fog
+  An alternate file may be used by placing its path in the FOG_RC environment variable
+
+  #######################################################
+  # Fog Credentials File
+  #
+  # Key-value pairs should look like:
+  # :aws_access_key_id:                 022QF06E7MXBSAMPLE
+  :default:
+    :aws_access_key_id:
+    :aws_secret_access_key:
+    :bluebox_api_key:
+    :bluebox_customer_id:
+    :brightbox_client_id:
+    :brightbox_secret:
+    :clodo_api_key:
+    :clodo_username:
+    :go_grid_api_key:
+    :go_grid_shared_secret:
+    :google_storage_access_key_id:
+    :google_storage_secret_access_key:
+    :hp_account_id:
+    :hp_secret_key:
+    :hp_tenant_id:
+    :linode_api_key:
+    :local_root:
+    :bare_metal_cloud_password:
+    :bare_metal_cloud_username:
+    :public_key_path:
+    :private_key_path:
+    :openstack_api_key:
+    :openstack_username:
+    :openstack_auth_url:
+    :openstack_tenant:
+    :openstack_region:
+    :ovirt_username:
+    :ovirt_password:
+    :ovirt_url:
+    :libvirt_uri:
+    :rackspace_api_key:
+    :rackspace_username:
+    :rackspace_servicenet:
+    :rackspace_cdn_ssl:
+    :stormondemand_username:
+    :stormondemand_password:
+    :terremark_username:
+    :terremark_password:
+    :voxel_api_key:
+    :voxel_api_secret:
+    :zerigo_email:
+    :zerigo_token:
+    :dnsimple_email:
+    :dnsimple_password:
+    :dnsmadeeasy_api_key:
+    :dnsmadeeasy_secret_key:
+    :cloudstack_host:
+    :cloudstack_api_key:
+    :cloudstack_secret_access_key:
+    :vsphere_server:
+    :vsphere_username:
+    :vsphere_password:
+    :libvirt_username:
+    :libvirt_password:
+    :libvirt_uri:
+    :libvirt_ip_command:
+    :ibm_username:
+    :ibm_password:
+  #
+  # End of Fog Credentials File
+  #######################################################
+
+Copy everything from :default: to the end of the output, and paste it into ~/.fog, then supply the credentials for the storage provider(s) you want to use.
+
+## TODO
+
+* There are no specs, partially because there isn't much that is done specifically by this app, it just assembles other things.
+
+## Copyright
+
+Copyright (c) 2012 Ryan J. Geyer. See LICENSE.txt for further details.

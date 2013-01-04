@@ -16,9 +16,9 @@ require 'rspec/core/rake_task'
 
 desc 'Package gem'
 gemtask = Gem::PackageTask.new(Gem::Specification.load('berks_to_rightscale.gemspec')) do |package|
-    package.package_dir = 'pkg'
-      package.need_zip = true
-        package.need_tar = true
+  package.package_dir = 'pkg'
+  package.need_zip = true
+  package.need_tar = true
 end
 
 directory gemtask.package_dir
