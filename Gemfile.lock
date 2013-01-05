@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    berks_to_rightscale (0.0.0)
+    berks_to_rightscale (0.0.1)
       berkshelf (~> 1.1)
       fog (~> 1.7)
       thor (~> 0.16.0)
