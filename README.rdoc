@@ -10,7 +10,7 @@ This is primarily a commandline tool for injesting a Berksfile and uploading the
 
 This requires a ~/.fog configuration file with the proper credentials for any storage provider(s) you wish to use.  To get an example of the ~/.fog config file do the following after installing berks_to_rightscale (shown above)
 
-  fog                                                                                                                                   [1.9.3-p194]
+  fog
   Missing Credentials
 
   To run as 'default', add the following to your resource config file: /Users/ryangeyer/.fog

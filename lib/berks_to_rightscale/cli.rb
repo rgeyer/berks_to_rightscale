@@ -54,6 +54,11 @@ module BerksToRightscale
       berksfile = ::Berkshelf::Berksfile.from_file(final_opts[:berksfile])
       berksfile.install(final_opts)
 
+      meta = ::Chef::Knife::CookbookMetadata.new
+      meta.config[:all] = true
+      meta.config[:cookbook_path] = output_path
+      meta.run
+
       puts "Creating a tarball containing the specified cookbooks"
       `tar -zcvf #{tarball_path} #{output_path} 2>&1`
 
@@ -65,8 +70,8 @@ module BerksToRightscale
       puts "Released file can be found at #{fog_file.public_url}"
 
       # Cleanup
-      FileUtils.rm tarball if File.exist? tarball
-      FileUtils.rm_rf output_path if File.directory? output_path
+      #FileUtils.rm tarball if File.exist? tarball
+      #FileUtils.rm_rf output_path if File.directory? output_path
     end
 
     desc "list_destinations", "Lists all possible release locations.  Basically a list of supported fog storage providers"
