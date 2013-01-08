@@ -27,13 +27,14 @@ module BerksToRightscale
     option :only, :desc => "Only cookbooks that are in these groups.", :type => :array
     option :berksfile, :banner => "PATH", :desc => "Path to a Berksfile to operate off of.", :default => File.join(Dir.pwd, ::Berkshelf::DEFAULT_FILENAME)
     option :force, :desc => "Forces the current release with the same name to be overwritten.", :type => :boolean
+    option :no_cleanup, :desc => "Skips the removal of the cookbooks directory and the generated tar.gz file", :type => :boolean
     option :provider, :desc => "A provider listed by list_destinations which will be used to upload the cookbook release", :required => true
     option :container, :desc => "The name of the storage container to put the release file in.", :required => true
     def release(projectname, releasename)
       output_path = ::File.join(Dir.pwd, "cookbooks")
       sym_options = {}
       options.each{|k,v| sym_options[k.to_sym] = v }
-      final_opts = {:path => output_path, :force => false}.merge(sym_options)
+      final_opts = {:path => output_path, :force => false, :no_cleanup => false}.merge(sym_options)
       tarball = "#{releasename}.tar.gz"
       file_key = "#{projectname}/#{tarball}"
 
@@ -60,7 +61,7 @@ module BerksToRightscale
       meta.run
 
       puts "Creating a tarball containing the specified cookbooks"
-      `tar -zcvf #{tarball_path} #{output_path} 2>&1`
+      `tar -C #{output_path} -zcvf #{tarball_path} . 2>&1`
 
       file = File.open(tarball_path, 'r')
       fog_file = container.files.create(:key => file_key, :body => file, :acl => 'public-read')
@@ -70,8 +71,10 @@ module BerksToRightscale
       puts "Released file can be found at #{fog_file.public_url}"
 
       # Cleanup
-      #FileUtils.rm tarball if File.exist? tarball
-      #FileUtils.rm_rf output_path if File.directory? output_path
+      unless final_opts[:no_cleanup]
+        FileUtils.rm tarball if File.exist? tarball
+        FileUtils.rm_rf output_path if File.directory? output_path
+      end
     end
 
     desc "list_destinations", "Lists all possible release locations.  Basically a list of supported fog storage providers"
