@@ -1,12 +1,12 @@
-# berks_to_rightscale
+= berks_to_rightscale
 
-This is primarily a commandline tool for injesting a Berksfile and uploading the resulting set of cookbooks to a tar.gz file in any storage provider supported by [fog](https://rubygems.org/gems/fog)
+This is primarily a commandline tool for injesting a Berksfile and uploading the resulting set of cookbooks to a tar.gz file in any storage provider supported by fog[https://rubygems.org/gems/fog]
 
-## Installation
+== Installation
 
   gem install berks_to_rightscale
 
-## Usage
+== Usage
 
 This requires a ~/.fog configuration file with the proper credentials for any storage provider(s) you wish to use.  To get an example of the ~/.fog config file do the following after installing berks_to_rightscale (shown above)
 
@@ -86,10 +86,10 @@ This requires a ~/.fog configuration file with the proper credentials for any st
 
 Copy everything from :default: to the end of the output, and paste it into ~/.fog, then supply the credentials for the storage provider(s) you want to use.
 
-## TODO
+== TODO
 
 * There are no specs, partially because there isn't much that is done specifically by this app, it just assembles other things.
 
-## Copyright
+== Copyright
 
 Copyright (c) 2012 Ryan J. Geyer. See LICENSE.txt for further details.
