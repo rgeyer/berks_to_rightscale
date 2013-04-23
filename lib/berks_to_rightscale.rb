@@ -20,6 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'berkshelf'
+require 'chef'
 require 'chef/knife/cookbook_metadata'
 require 'fog'
 require 'thor'
