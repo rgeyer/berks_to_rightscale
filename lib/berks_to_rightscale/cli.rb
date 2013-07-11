@@ -30,6 +30,8 @@ module BerksToRightscale
     option :no_cleanup, :desc => "Skips the removal of the cookbooks directory and the generated tar.gz file", :type => :boolean
     option :provider, :desc => "A provider listed by list_destinations which will be used to upload the cookbook release", :required => true
     option :container, :desc => "The name of the storage container to put the release file in.", :required => true
+    option :provider_options, :desc => "A comma-separated list of key=value options to pass to the fog storage provider. i.e. region=us-west-1", :required => false
+
     def release(projectname, releasename)
       output_path = ::File.join(Dir.pwd, "cookbooks")
       sym_options = {}
@@ -42,14 +44,40 @@ module BerksToRightscale
 
       fog_params = { :provider => final_opts[:provider] }
 
-      fog = ::Fog::Storage.new(fog_params)
+      if final_opts[:provider_options]
+        provider_opts = { }
+        begin
+          # convert comma-separated list to hash
+          option_list = final_opts[:provider_options].split(",")
+          provider_opts = option_list.inject({}) do |hash, kv_pair|
+            kv = kv_pair.split("=")
+            raise "ERROR: value not found." unless kv[1]
+            hash.merge({ kv[0] => kv[1] })
+          end
+        rescue
+          puts "ERROR: malformed ---provider-options parameter.  Must be in the form of 'opt1=value1,opt2=value2'. Please try again."
+          exit 1
+        end
+        # merge in provider options hash
+        fog_params.merge!(provider_opts)
+      end
 
-      unless container = fog.directories.all.detect {|cont| cont.key == final_opts[:container]}
-        raise "There was no container named #{final_opts[:container]} for provider #{final_opts[:provider]}"
+
+      begin
+        @fog = ::Fog::Storage.new(fog_params)
+      rescue Exception => e
+        puts "ERROR: Fog had a problem initializing storage provider: #{e.message}"
+        exit 1
+      end
+
+      unless container = @fog.directories.all.detect {|cont| cont.key == final_opts[:container]}
+        puts "There was no container named #{final_opts[:container]} for provider #{final_opts[:provider]}"
+        exit 1
       end
 
       if container.files.all.detect {|file| file.key == file_key} && !final_opts[:force]
-        raise "There is already a released named #{releasename} for the project #{projectname}.  If you want to overwrite it, specify the --force flag"
+        puts "There is already a released named #{releasename} for the project #{projectname}.  If you want to overwrite it, specify the --force flag"
+        exit 1
       end
 
       berksfile = ::Berkshelf::Berksfile.from_file(final_opts[:berksfile])
