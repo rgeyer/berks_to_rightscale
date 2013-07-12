@@ -9,10 +9,10 @@ Gem::Specification.new do |gem|
   gem.authors = ["Ryan J. Geyer"]
   gem.executables << 'berks_to_rightscale'
 
-  gem.add_dependency('berkshelf', '~> 1.1')
-  gem.add_dependency('chef', '>= 10.16.2') # This is technically redundant since berkshelf already requires chef.  This is here just for consistency and documentation.
-  gem.add_dependency('thor', '~> 0.16.0')
-  gem.add_dependency('fog', '~> 1.7')
-                          
+  gem.add_dependency('berkshelf', '~> 2.0.6')
+  gem.add_dependency('chef', '~> 11.4.2')
+  gem.add_dependency('thor', '~> 0.18.1')
+  gem.add_dependency('fog', '~> 1.12.1')
+
   gem.files = Dir.glob("{lib,bin}/**/*") + ["LICENSE.txt", "README.rdoc"]
 end
