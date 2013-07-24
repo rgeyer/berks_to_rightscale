@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name = "berks_to_rightscale"
-  gem.version = "0.0.5"
+  gem.version = "0.0.6"
   gem.homepage = "https://github.com/rgeyer/berks_to_rightscale"
   gem.license = "MIT"
   gem.summary = %Q{A commandline utility which will collect cookbooks defined by berkshelf, compress them, and store them in S3 to be fetched by RightScale}
