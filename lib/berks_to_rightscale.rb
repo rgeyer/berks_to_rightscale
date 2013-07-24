@@ -25,4 +25,6 @@ require 'chef/knife/cookbook_metadata'
 require 'fog'
 require 'thor'
 
+SafeYAML::OPTIONS[:deserialize_symbols] = true if defined? SafeYAML::OPTIONS
+
 require 'berks_to_rightscale/cli'
